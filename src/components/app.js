@@ -1,8 +1,9 @@
 import 'materialize-css/dist/css/materialize.min.css';
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import AddItem from './add_item';
 import TodoList from './todo_list';
-import listData from '../data/todo';
+import Home from './home';
 import axios from 'axios';
 
 const BASE_URL = 'http://api.reactprototypes.com';
@@ -40,27 +41,17 @@ class App extends Component {
         });
     }
 
-    // getListData(){
-    //     // This is where you would call the server for your data
-
-    //     // http://api.reactprototypes.com/todos?key=c418_demouser
-    //     axios.get(`${BASE_URL}/todos${API_KEY}`).then((resp) => {
-            
-    //         this.setState({
-    //             items: resp.data.todos
-    //         });
-
-    //     }).catch((err) => {
-    //         console.log('There was an error!:', err.message);
-    //     });
-    // }
-
     render(){
+        console.log('To Do List:', this.state.items);
+
         return (
             <div className="container">
-                <h1 className="center">To Do List</h1>
-                <AddItem add={this.addItem.bind(this)}/>
-                <TodoList list={this.state.items}/>
+                <Route 
+                    path="/"
+                    exact
+                    render={ props => {
+                        return <Home add={this.addItem.bind(this)} list={this.state.items} {...props}/> 
+                    }}/>
             </div>
         );
     }
