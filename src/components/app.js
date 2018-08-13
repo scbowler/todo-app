@@ -18,10 +18,6 @@ class App extends Component {
         };
     }
 
-    componentDidMount(){
-        this.getListData();
-    }
-
     async addItem(item){
         try {
             await axios.post(`${BASE_URL}/todos${API_KEY}`, item);
@@ -42,16 +38,14 @@ class App extends Component {
     }
 
     render(){
-        console.log('To Do List:', this.state.items);
-
         return (
             <div className="container">
                 <Route 
                     path="/"
                     exact
                     render={ props => {
-                        return <Home add={this.addItem.bind(this)} list={this.state.items} {...props}/> 
-                    }}/>
+                        return <Home getList={this.getListData.bind(this)} add={this.addItem.bind(this)} list={this.state.items} {...props}/> 
+                }}/>
             </div>
         );
     }
